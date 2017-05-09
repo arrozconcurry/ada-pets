@@ -44,6 +44,11 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
       get pet_path(pets(:two).id)
       must_respond_with :success
     end
+
+    it "does not get a pet that does not exist" do
+      get pet_path(id: 50)
+      must_respond_with :no_content
+    end
   end
 
   describe "create" do

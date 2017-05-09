@@ -3,12 +3,17 @@ class PetsController < ApplicationController
 # This exercise
   def index
     pets = Pet.all #@pets b/c passing it to views. In API there are NO views
+      # not appearing in postman because no json call - now json
     render json: pets.as_json(only: [:id, :name, :age, :human]), status: :ok
   end
-  # not appearing in postman because no json call - now json
-
   # need a show method. There's a route for it but no method
-
+  def show
+    if pet = Pet.find_by(params[:id])
+      render json: pet.as_json(only: [:id, :name, :age, :human]), status: :ok
+    else
+      render status: :no_content, json: { errors: pet.errors.messages }
+    end
+  end
   # need a create method to post
 end
 
