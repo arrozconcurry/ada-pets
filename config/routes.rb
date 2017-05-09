@@ -3,3 +3,6 @@ Rails.application.routes.draw do
   get "pets", to: "pets#index", as: "pets"
   get "pet/:id", to: "pets#show", as: "pet"
 end
+
+# This exercise
+# https://github.com/Ada-Developers-Academy/textbook-curriculum/blob/master/09-intermediate-rails/creating-apis.md
