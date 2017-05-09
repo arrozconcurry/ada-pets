@@ -8,13 +8,28 @@ class PetsController < ApplicationController
   end
   # need a show method. There's a route for it but no method
   def show
-    if pet = Pet.find_by(params[:id])
-      render json: pet.as_json(only: [:id, :name, :age, :human]), status: :ok
+    pet = Pet.find_by(id: params[:id])
+    if pet
+      render json: pet, status: :ok
     else
-      render status: :no_content, json: { errors: pet.errors.messages }
+      render json: pet, status: :no_content
     end
   end
+
   # need a create method to post
+  def create
+    pet = Pet.new(pet_params)
+    if pet.save
+      render status: :ok, json: { id: pet.id }
+    else
+      render status: :bad_request, json: { errors: pet.errors.messages }
+    end
+  end
+
+  private
+  def pet_params
+    params.require(:pet).permit(:name, :age, :human)
+  end
 end
 
 # To set this project up from scratch
